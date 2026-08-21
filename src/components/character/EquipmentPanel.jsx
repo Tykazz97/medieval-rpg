@@ -37,6 +37,11 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
       style={{
         width: 64,
         height: 64,
+        padding: 0,
+        margin: 0,
+        lineHeight: 0,
+        appearance: "none",
+        WebkitAppearance: "none",
         borderRadius: radius.md,
         background: filled ? color.panelRaised : color.panel,
         border: filled ? `1.5px solid ${color.gold}` : border,
