@@ -27,15 +27,16 @@ const GRID_LAYOUT = [
   ["arme", null, "bouclier"],
 ];
 
-function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
+function SlotButton({ slotKey, item, disabled, onEquipSlotClick, onUnequip }) {
   const svgIcon = SLOT_ICONS[slotKey];
   const ludoIcon = SLOT_LUDO_ICONS[slotKey];
   const filled = !!item;
 
   return (
     <button
-      onClick={() => (filled ? onUnequip(slotKey) : onEquipSlotClick(slotKey))}
-      title={filled ? `${item.name} — clic pour retirer` : SLOT_LABELS[slotKey] || slotKey}
+      onClick={() => !disabled && (filled ? onUnequip(slotKey) : onEquipSlotClick(slotKey))}
+      title={disabled ? "Indisponible avec une arme à deux mains" : filled ? `${item.name} — clic pour retirer` : SLOT_LABELS[slotKey] || slotKey}
+      disabled={disabled}
       style={{
         width: 64,
         height: 64,
@@ -45,9 +46,11 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
         appearance: "none",
         WebkitAppearance: "none",
         borderRadius: radius.md,
-        background: filled ? color.panelRaised : color.panel,
+        background: disabled ? "#0d0d12" : filled ? color.panelRaised : color.panel,
         border: filled ? `1.5px solid ${color.gold}` : border,
         color: filled ? color.goldBright : color.parchmentDim,
+        opacity: disabled ? 0.35 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -55,8 +58,8 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
         boxShadow: filled ? "0 0 12px rgba(184,146,63,0.15)" : "none",
         position: "relative",
       }}
-      onMouseEnter={(e) => { if (!filled) e.currentTarget.style.borderColor = color.lineBright; }}
-      onMouseLeave={(e) => { if (!filled) e.currentTarget.style.borderColor = color.line; }}
+      onMouseEnter={(e) => { if (!filled && !disabled) e.currentTarget.style.borderColor = color.lineBright; }}
+      onMouseLeave={(e) => { if (!filled && !disabled) e.currentTarget.style.borderColor = color.line; }}
     >
       {filled && item.img ? (
         <img src={item.img} alt={item.name} width="44" height="44" style={{ objectFit: "contain", display: "block" }} />
@@ -70,6 +73,8 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
 }
 
 export default function EquipmentPanel({ equipped, onEquipSlotClick, onUnequip }) {
+  const shieldDisabled = !!equipped.arme?.twoHanded;
+
   return (
     <div style={{ background: color.panel, borderRadius: radius.lg, border, overflow: "hidden" }}>
       <BannerHeader icon="🛡" title="Équipement" />
@@ -83,6 +88,7 @@ export default function EquipmentPanel({ equipped, onEquipSlotClick, onUnequip }
                   key={slotKey}
                   slotKey={slotKey}
                   item={equipped[slotKey]}
+                  disabled={slotKey === "bouclier" && shieldDisabled}
                   onEquipSlotClick={onEquipSlotClick}
                   onUnequip={onUnequip}
                 />

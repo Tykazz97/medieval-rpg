@@ -41,12 +41,23 @@ export function usePlayer() {
 
   const equipItem = useCallback((item) => {
     setPlayer((prev) => {
-      const slot = item.type; // ex: "chapeau", "arme", ...
-      return {
-        ...prev,
-        equipped: { ...prev.equipped, [slot]: item },
-        inventory: prev.inventory.filter((i) => i.uid !== item.uid),
-      };
+      const slot = item.type; // ex: "chapeau", "arme", "bouclier"
+      const newEquipped = { ...prev.equipped, [slot]: item };
+      let newInventory = prev.inventory.filter((i) => i.uid !== item.uid);
+
+      // Règle armes à deux mains : équiper une arme twoHanded déséquipe
+      // automatiquement le bouclier (retourné dans l'inventaire).
+      if (slot === "arme" && item.twoHanded && prev.equipped.bouclier) {
+        newInventory = [...newInventory, prev.equipped.bouclier];
+        newEquipped.bouclier = null;
+      }
+      // Inversement : équiper un bouclier alors qu'une arme à deux mains
+      // est en place n'est pas autorisé — on ignore l'action.
+      if (slot === "bouclier" && prev.equipped.arme?.twoHanded) {
+        return prev;
+      }
+
+      return { ...prev, equipped: newEquipped, inventory: newInventory };
     });
   }, []);
 
