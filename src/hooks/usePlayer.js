@@ -42,8 +42,15 @@ export function usePlayer() {
   const equipItem = useCallback((item) => {
     setPlayer((prev) => {
       const slot = item.type; // ex: "chapeau", "arme", "bouclier"
+      const previousItem = prev.equipped[slot];
       const newEquipped = { ...prev.equipped, [slot]: item };
       let newInventory = prev.inventory.filter((i) => i.uid !== item.uid);
+
+      // L'item déjà présent dans ce slot (s'il y en avait un) retourne
+      // dans l'inventaire au lieu de disparaître.
+      if (previousItem) {
+        newInventory = [...newInventory, previousItem];
+      }
 
       // Règle armes à deux mains : équiper une arme twoHanded déséquipe
       // automatiquement le bouclier (retourné dans l'inventaire).
