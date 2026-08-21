@@ -114,6 +114,60 @@ export const ITEMS = {
     atk_magie: 6,
     mana: 10,
   },
+
+  // ---------------------------------------------------------
+  // SET TRAQUEUR — Assassin : Esquive / Critique
+  // ---------------------------------------------------------
+  chapeau_traqueur: {
+    id: "chapeau_traqueur",
+    name: "Capuche du Traqueur",
+    type: "chapeau",
+    rarity: "commune",
+    set: "traqueur",
+    img: `${ICON_BASE}/traqueur/chapeau_traqueur.png`,
+    esquive: 2,
+    critique: 1,
+  },
+  plastron_traqueur: {
+    id: "plastron_traqueur",
+    name: "Veste du Traqueur",
+    type: "plastron",
+    rarity: "commune",
+    set: "traqueur",
+    img: `${ICON_BASE}/traqueur/plastron_traqueur.png`,
+    esquive: 4,
+    critique: 2,
+  },
+  gants_traqueur: {
+    id: "gants_traqueur",
+    name: "Gants du Traqueur",
+    type: "gants",
+    rarity: "commune",
+    set: "traqueur",
+    img: `${ICON_BASE}/traqueur/gants_traqueur.png`,
+    critique: 1,
+    atk_phys: 3,
+  },
+  ceinture_traqueur: {
+    id: "ceinture_traqueur",
+    name: "Ceinture du Traqueur",
+    type: "ceinture",
+    rarity: "commune",
+    set: "traqueur",
+    img: `${ICON_BASE}/traqueur/ceinture_traqueur.png`,
+    esquive: 2,
+    critique: 1,
+  },
+  jambieres_traqueur: {
+    id: "jambieres_traqueur",
+    name: "Bottes du Traqueur",
+    type: "jambieres",
+    rarity: "commune",
+    set: "traqueur",
+    img: `${ICON_BASE}/traqueur/jambieres_traqueur.png`,
+    esquive: 3,
+    critique: 1,
+  },
 };
 
 export const ITEM_ORDER = Object.keys(ITEMS);
@@ -141,6 +195,16 @@ export const SETS = {
     bonuses: {
       2: { desc: "+10 ATK Magique, +20 Mana", atk_magie: 10, mana: 20 },
       5: { desc: "+25 ATK Magique, +60 Mana, 10% de chance qu'un sort ne consomme pas de mana", atk_magie: 25, mana: 60, manaFree: 0.10 },
+    },
+  },
+  traqueur: {
+    key: "traqueur",
+    name: "Cuirs du Traqueur",
+    color: "#6f9c4a",
+    pieces: ["chapeau_traqueur", "plastron_traqueur", "gants_traqueur", "ceinture_traqueur", "jambieres_traqueur"],
+    bonuses: {
+      2: { desc: "+5% Esquive, +3% Critique", esquive: 5, critique: 3 },
+      5: { desc: "+12% Esquive, +6% Critique, le premier coup de chaque combat est un critique garanti", esquive: 12, critique: 6, guaranteedFirstCrit: true },
     },
   },
 };
