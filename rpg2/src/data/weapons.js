@@ -1,0 +1,88 @@
+// ============================================================
+// ARMES — chaque arme équipée donne accès à 3 sorts fixes.
+// C'est l'arme (pas une "classe") qui définit le style de jeu.
+// ============================================================
+
+// Types de dégâts élémentaires additionnels aux dégâts phys/mag de base
+export const ELEMENTS = {
+  feu: { key: "feu", label: "Feu", color: "#e0742f", desc: "Brûlure : dégâts sur la durée" },
+  poison: { key: "poison", label: "Poison", color: "#6f9c4a", desc: "Dégâts sur la durée" },
+  givre: { key: "givre", label: "Givre", color: "#5fa3c4", desc: "Ralentit la jauge ATB de la cible" },
+};
+
+export const WEAPON_TYPES = {
+  dague: {
+    key: "dague",
+    label: "Dague",
+    icon: "🗡️",
+    style: "Assassin — critique, poison, esquive",
+    damageType: "phys",
+    spells: [
+      { id: "laceration", name: "Lacération", pa: 2, type: "phys", desc: "Dégâts physiques faibles, +30% critique sur ce coup", critBonus: 30 },
+      { id: "frappe_empoisonnee", name: "Frappe Empoisonnée", pa: 3, type: "phys", desc: "Dégâts physiques + applique Poison (3 tours)", applyElement: "poison" },
+      { id: "disparition", name: "Disparition", pa: 4, type: "buff", desc: "Esquive garantie la prochaine attaque + prochain coup porté = critique auto" },
+    ],
+  },
+  epee: {
+    key: "epee",
+    label: "Épée",
+    icon: "⚔️",
+    style: "Guerrier — équilibré, défense/attaque",
+    damageType: "phys",
+    spells: [
+      { id: "taillade", name: "Taillade", pa: 2, type: "phys", desc: "Dégâts physiques standards, fiable" },
+      { id: "parade", name: "Parade", pa: 2, type: "buff", desc: "+DEF Physique temporaire (2 tours) + contre-attaque légère si touché" },
+      { id: "coup_devastateur", name: "Coup Dévastateur", pa: 5, type: "phys", desc: "Gros dégâts physiques, ignore une partie de la DEF ennemie" },
+    ],
+  },
+  baton: {
+    key: "baton",
+    label: "Bâton",
+    icon: "🪄",
+    style: "Mage — dégâts magiques, zone, feu",
+    damageType: "mag",
+    spells: [
+      { id: "projectile_arcanique", name: "Projectile Arcanique", pa: 2, type: "mag", desc: "Dégâts magiques standards" },
+      { id: "brasier", name: "Brasier", pa: 3, type: "mag", desc: "Dégâts magiques + applique Feu (3 tours)", applyElement: "feu" },
+      { id: "explosion_arcanique", name: "Explosion Arcanique", pa: 5, type: "mag", desc: "Gros dégâts magiques sur tous les ennemis", aoe: true },
+    ],
+  },
+  arc: {
+    key: "arc",
+    label: "Arc",
+    icon: "🏹",
+    style: "Rôdeur — distance, précision, zone",
+    damageType: "phys",
+    spells: [
+      { id: "tir_rapide", name: "Tir Rapide", pa: 2, type: "phys", desc: "Dégâts physiques faibles, ignore une partie de l'esquive ennemie" },
+      { id: "tir_percant", name: "Tir Perçant", pa: 3, type: "phys", desc: "Dégâts physiques moyens + réduit la DEF Physique de la cible (2 tours)" },
+      { id: "pluie_de_fleches", name: "Pluie de Flèches", pa: 5, type: "phys", desc: "Dégâts physiques sur tous les ennemis, réduits par cible", aoe: true },
+    ],
+  },
+  marteau: {
+    key: "marteau",
+    label: "Marteau de guerre",
+    icon: "🔨",
+    style: "Berserker — dégâts bruts, contrôle",
+    damageType: "phys",
+    spells: [
+      { id: "ecrasement", name: "Écrasement", pa: 3, type: "phys", desc: "Gros dégâts physiques, coup lent mais puissant" },
+      { id: "etourdissement", name: "Étourdissement", pa: 4, type: "phys", desc: "Dégâts physiques moyens + la cible perd son prochain tour (jauge ATB vidée)" },
+      { id: "seisme", name: "Séisme", pa: 6, type: "phys", desc: "Dégâts physiques sur tous les ennemis + réduit leur Vitesse (2 tours)", aoe: true, applyElement: "givre" },
+    ],
+  },
+  faux: {
+    key: "faux",
+    label: "Faux",
+    icon: "🩸",
+    style: "Nécromancien — hybride, drain, ombre",
+    damageType: "mag",
+    spells: [
+      { id: "fauchaison", name: "Fauchaison", pa: 3, type: "phys", desc: "Dégâts physiques sur tous les ennemis en ligne", aoe: true },
+      { id: "vol_de_vie", name: "Vol de Vie", pa: 3, type: "mag", desc: "Dégâts magiques + soigne le joueur d'un % des dégâts infligés", lifesteal: 0.4 },
+      { id: "etreinte_glaciale", name: "Étreinte Glaciale", pa: 4, type: "mag", desc: "Dégâts magiques + applique Givre (ralentit l'ATB)", applyElement: "givre" },
+    ],
+  },
+};
+
+export const WEAPON_ORDER = ["dague", "epee", "baton", "arc", "marteau", "faux"];
