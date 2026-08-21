@@ -1,5 +1,6 @@
 import React from "react";
 import SLOT_ICONS from "../icons/SlotIcons.jsx";
+import SLOT_LUDO_ICONS from "../icons/SlotLudoIcons.jsx";
 import BannerHeader from "../shared/BannerHeader.jsx";
 import { color, border, radius } from "../../styles/theme.js";
 
@@ -27,7 +28,8 @@ const GRID_LAYOUT = [
 ];
 
 function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
-  const icon = SLOT_ICONS[slotKey];
+  const svgIcon = SLOT_ICONS[slotKey];
+  const ludoIcon = SLOT_LUDO_ICONS[slotKey];
   const filled = !!item;
 
   return (
@@ -45,7 +47,7 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
         borderRadius: radius.md,
         background: filled ? color.panelRaised : color.panel,
         border: filled ? `1.5px solid ${color.gold}` : border,
-        color: filled ? color.goldBright : color.mist,
+        color: filled ? color.goldBright : color.parchmentDim,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -57,9 +59,11 @@ function SlotButton({ slotKey, item, onEquipSlotClick, onUnequip }) {
       onMouseLeave={(e) => { if (!filled) e.currentTarget.style.borderColor = color.line; }}
     >
       {filled && item.img ? (
-        <img src={item.img} alt={item.name} width="40" height="40" style={{ objectFit: "contain" }} />
+        <img src={item.img} alt={item.name} width="44" height="44" style={{ objectFit: "contain", display: "block" }} />
+      ) : ludoIcon ? (
+        <img src={ludoIcon} alt="" width="44" height="44" style={{ objectFit: "contain", display: "block", opacity: filled ? 1 : 0.8 }} />
       ) : (
-        icon || <span style={{ fontSize: 10 }}>{SLOT_LABELS[slotKey]}</span>
+        svgIcon || <span style={{ fontSize: 10 }}>{SLOT_LABELS[slotKey]}</span>
       )}
     </button>
   );
