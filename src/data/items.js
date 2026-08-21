@@ -60,6 +60,60 @@ export const ITEMS = {
     def_phys: 6,
     hp: 10,
   },
+
+  // ---------------------------------------------------------
+  // SET APPRENTI — Mage : ATK Magie / Mana
+  // ---------------------------------------------------------
+  chapeau_apprenti: {
+    id: "chapeau_apprenti",
+    name: "Capuche de l'Apprenti",
+    type: "chapeau",
+    rarity: "commune",
+    set: "apprenti",
+    img: `${ICON_BASE}/apprenti/chapeau_apprenti.png`,
+    atk_magie: 6,
+    mana: 10,
+  },
+  plastron_apprenti: {
+    id: "plastron_apprenti",
+    name: "Robe de l'Apprenti",
+    type: "plastron",
+    rarity: "commune",
+    set: "apprenti",
+    img: `${ICON_BASE}/apprenti/plastron_apprenti.png`,
+    atk_magie: 12,
+    mana: 20,
+  },
+  gants_apprenti: {
+    id: "gants_apprenti",
+    name: "Gants de l'Apprenti",
+    type: "gants",
+    rarity: "commune",
+    set: "apprenti",
+    img: `${ICON_BASE}/apprenti/gants_apprenti.png`,
+    atk_magie: 3,
+    def_magie: 4,
+  },
+  ceinture_apprenti: {
+    id: "ceinture_apprenti",
+    name: "Ceinture de l'Apprenti",
+    type: "ceinture",
+    rarity: "commune",
+    set: "apprenti",
+    img: `${ICON_BASE}/apprenti/ceinture_apprenti.png`,
+    atk_magie: 5,
+    mana: 10,
+  },
+  jambieres_apprenti: {
+    id: "jambieres_apprenti",
+    name: "Bottes de l'Apprenti",
+    type: "jambieres",
+    rarity: "commune",
+    set: "apprenti",
+    img: `${ICON_BASE}/apprenti/jambieres_apprenti.png`,
+    atk_magie: 6,
+    mana: 10,
+  },
 };
 
 export const ITEM_ORDER = Object.keys(ITEMS);
@@ -77,6 +131,16 @@ export const SETS = {
     bonuses: {
       2: { desc: "+10 DEF Physique, +20 HP", def_phys: 10, hp: 20 },
       5: { desc: "+25 DEF Physique, +60 HP, 15% de chance de riposte", def_phys: 25, hp: 60, riposte: 0.15 },
+    },
+  },
+  apprenti: {
+    key: "apprenti",
+    name: "Robes de l'Apprenti",
+    color: "#5fa3c4",
+    pieces: ["chapeau_apprenti", "plastron_apprenti", "gants_apprenti", "ceinture_apprenti", "jambieres_apprenti"],
+    bonuses: {
+      2: { desc: "+10 ATK Magique, +20 Mana", atk_magie: 10, mana: 20 },
+      5: { desc: "+25 ATK Magique, +60 Mana, 10% de chance qu'un sort ne consomme pas de mana", atk_magie: 25, mana: 60, manaFree: 0.10 },
     },
   },
 };
