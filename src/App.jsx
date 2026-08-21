@@ -14,12 +14,13 @@ const TAB_TITLES = {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("personnage");
-  const { player, stats, unequipSlot, addCaracPoint } = usePlayer();
+  const { player, stats, equipItem, unequipSlot, addCaracPoint } = usePlayer();
 
-  // Pour l'instant, cliquer sur un slot vide ne fait rien (pas encore
-  // d'inventaire/items connectés) — sera branché à l'étape suivante.
+  // Pour l'instant, cliquer sur un slot vide ne fait rien — l'équipement
+  // se fait depuis le sac (InventoryPanel). Sera étendu plus tard pour
+  // ouvrir un sélecteur direct depuis le slot si besoin.
   const handleEquipSlotClick = (slotKey) => {
-    console.log("Slot cliqué (à connecter à l'inventaire) :", slotKey);
+    console.log("Slot vide cliqué :", slotKey);
   };
 
   return (
@@ -31,6 +32,7 @@ export default function App() {
           onEquipSlotClick={handleEquipSlotClick}
           onUnequip={unequipSlot}
           onAddCaracPoint={addCaracPoint}
+          onEquipItem={equipItem}
         />
       )}
       {activeTab !== "personnage" && <ComingSoon title={TAB_TITLES[activeTab] || activeTab} />}

@@ -73,6 +73,26 @@ export default function StatsPanel({ player, stats, onAddCaracPoint }) {
         </div>
       </div>
 
+      {/* Bonus de set actifs */}
+      {stats.setBonuses && stats.setBonuses.length > 0 && (
+        <div style={{ background: color.panel, borderRadius: radius.lg, border, overflow: "hidden" }}>
+          <BannerHeader icon="🎽" title="Bonus de set" />
+          <div style={{ padding: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+            {stats.setBonuses.map(({ set, count, threshold, bonus }) => (
+              <div key={set.key} style={{ padding: "10px 14px", background: color.panelRaised, borderRadius: radius.md, border: `1px solid ${set.color}55` }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                  <span style={{ fontWeight: 600, fontSize: 13, color: set.color }}>{set.name}</span>
+                  <span style={{ fontSize: 11, color: color.mist }}>{count}/{set.pieces.length} pièces</span>
+                </div>
+                <div style={{ fontSize: 11, color: color.parchmentDim }}>
+                  Bonus {threshold} pièces : {bonus.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Stats de combat calculées */}
       <div style={{ background: color.panel, borderRadius: radius.lg, border, overflow: "hidden" }}>
         <BannerHeader icon="⚔" title="Stats de combat" />

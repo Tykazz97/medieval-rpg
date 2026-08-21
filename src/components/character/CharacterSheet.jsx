@@ -1,6 +1,7 @@
 import React from "react";
 import EquipmentPanel from "./EquipmentPanel.jsx";
 import StatsPanel from "./StatsPanel.jsx";
+import InventoryPanel from "./InventoryPanel.jsx";
 import { color, border, radius, font } from "../../styles/theme.js";
 
 function ResourceBar({ label, value, max, colorFrom, colorTo }) {
@@ -18,7 +19,7 @@ function ResourceBar({ label, value, max, colorFrom, colorTo }) {
   );
 }
 
-export default function CharacterSheet({ player, stats, onEquipSlotClick, onUnequip, onAddCaracPoint }) {
+export default function CharacterSheet({ player, stats, onEquipSlotClick, onUnequip, onAddCaracPoint, onEquipItem }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20, height: "100%" }}>
       {/* En-tête personnage */}
@@ -38,12 +39,13 @@ export default function CharacterSheet({ player, stats, onEquipSlotClick, onUneq
         </div>
       </div>
 
-      {/* Contenu deux colonnes — équipement à gauche, stats à droite */}
-      <div style={{ display: "grid", gridTemplateColumns: "380px 1fr", gap: 20, flex: 1, minHeight: 0 }}>
+      {/* Contenu trois colonnes — équipement, stats, sac */}
+      <div style={{ display: "grid", gridTemplateColumns: "380px 1fr 320px", gap: 20, flex: 1, minHeight: 0 }}>
         <EquipmentPanel equipped={player.equipped} onEquipSlotClick={onEquipSlotClick} onUnequip={onUnequip} />
         <div style={{ overflowY: "auto" }}>
           <StatsPanel player={player} stats={stats} onAddCaracPoint={onAddCaracPoint} />
         </div>
+        <InventoryPanel inventory={player.inventory} onEquip={onEquipItem} />
       </div>
     </div>
   );

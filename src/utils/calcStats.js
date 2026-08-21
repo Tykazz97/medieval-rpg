@@ -1,4 +1,5 @@
 import { applyCaracEffects } from "../data/caracs.js";
+import { calcSetBonuses } from "../data/items.js";
 
 // ============================================================
 // Calcule les stats finales d'un joueur = base + caracs + équipement
@@ -29,17 +30,27 @@ export function calcStats(player) {
     }
   }
 
+  // Bonus de set (ex: 2/5 pièces du Set Vétéran équipées)
+  const setBonuses = calcSetBonuses(equipped);
+  const setBonus = { def_phys: 0, def_magie: 0, atk_phys: 0, atk_magie: 0, hp: 0, mana: 0, esquive: 0, critique: 0 };
+  for (const { bonus } of setBonuses) {
+    for (const key of Object.keys(setBonus)) {
+      if (bonus[key]) setBonus[key] += bonus[key];
+    }
+  }
+
   return {
-    atkPhys: (caracBonus.atkPhys || 0) + equip.atk_phys,
-    atkMagie: (caracBonus.atkMagie || 0) + equip.atk_magie,
-    defPhys: equip.def_phys, // DEF uniquement via équipement
-    defMagie: equip.def_magie,
-    maxHp: (player.baseHp || 100) + (caracBonus.maxHpBonus || 0) + equip.hp,
-    manaMax: (player.baseMana || 30) + (caracBonus.manaMax || 0) + equip.mana,
-    esquive: Math.min(75, (caracBonus.esquive || 0) + equip.esquive),
-    critique: Math.min(75, (caracBonus.critique || 0) + equip.critique),
+    atkPhys: (caracBonus.atkPhys || 0) + equip.atk_phys + setBonus.atk_phys,
+    atkMagie: (caracBonus.atkMagie || 0) + equip.atk_magie + setBonus.atk_magie,
+    defPhys: equip.def_phys + setBonus.def_phys, // DEF uniquement via équipement
+    defMagie: equip.def_magie + setBonus.def_magie,
+    maxHp: (player.baseHp || 100) + (caracBonus.maxHpBonus || 0) + equip.hp + setBonus.hp,
+    manaMax: (player.baseMana || 30) + (caracBonus.manaMax || 0) + equip.mana + setBonus.mana,
+    esquive: Math.min(75, (caracBonus.esquive || 0) + equip.esquive + setBonus.esquive),
+    critique: Math.min(75, (caracBonus.critique || 0) + equip.critique + setBonus.critique),
     dropBonus: (caracBonus.dropBonus || 0) + equip.dropBonus,
     vitesse: (caracBonus.vitesse || 10) + equip.vitesse,
     paMax: 6, // base fixe, non modifiable par caracs pour l'instant
+    setBonuses, // exposé pour affichage (nom du set, palier atteint)
   };
 }

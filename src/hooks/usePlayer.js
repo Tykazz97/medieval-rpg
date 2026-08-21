@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { calcStats } from "../utils/calcStats.js";
+import { ITEMS, ITEM_ORDER } from "../data/items.js";
 
 const EMPTY_EQUIPPED = {
   chapeau: null, cape: null, plastron: null, amulette: null,
@@ -7,6 +8,12 @@ const EMPTY_EQUIPPED = {
   arme: null, bouclier: null,
   relique1: null, relique2: null, relique3: null, relique4: null,
 };
+
+// Inventaire de test — les items du Set Vétéran pour valider le flux
+// équiper/déséquiper avant de brancher un vrai système de loot.
+function testInventory() {
+  return ITEM_ORDER.map((id, i) => ({ ...ITEMS[id], uid: `test-${i}` }));
+}
 
 function initialPlayer() {
   return {
@@ -20,7 +27,7 @@ function initialPlayer() {
     caracPoints: 0,
     caracs: { force: 0, intelligence: 0, agilite: 0, vitalite: 0, chance: 0, vitesse: 0 },
     equipped: { ...EMPTY_EQUIPPED },
-    inventory: [],
+    inventory: testInventory(),
     gold: 0,
   };
 }
